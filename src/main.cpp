@@ -1,29 +1,26 @@
 #include <iostream>
 
+bool isPalindrome(int x)
+{
 
-class Singleton {
-	public:
-	
-	static Singleton& getInstance(){
-		static Singleton m_instance;
-		return m_instance;
+	std::string str = std::to_string(x);
+	if (str.size() < 2)
+		return false;	
+
+	for (int i = 0, j = str.size() - 1; i < str.size() / 2; i++, j--)
+	{
+		if (str[i] != str[j])
+		{
+			return false;
+		}
 	}
+	return true;
+}
 
-	private:
-	Singleton() = default;
-	~Singleton() = default;
+int main()
+{
 
-	Singleton(const Singleton& ) = delete;
-	Singleton(Singleton&& ) = delete;
-	Singleton& operator=(const Singleton& ) = delete;  
-};
-
-
-int main(){
-
-	std::cout << "Hello Singleton.\n";
-	Singleton& s = Singleton::getInstance();	
-
+	std::cout << isPalindrome(10) << std::endl;
 
 	return 0;
 }
