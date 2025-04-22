@@ -4,7 +4,6 @@ set(PROJECT_NAME __dp)
 
 project(${PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
 
-
 set(CMAKE_OSX_ARCHITECTURES "arm64")
 
 set(CMAKE_CXX_FLAGS_DEBUG           "-std=c++20 -O0 -g -Wall -fcolor-diagnostics -fansi-escape-codes -DDEBUG")
@@ -16,7 +15,5 @@ message(${CMAKE_SOURCE_DIR}/include)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_executable(${PROJECT_NAME} src/main.cpp)
 target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/include)
-
-
 
 # target_link_libraries(${PROJECT_NAME} -pthread)
