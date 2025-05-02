@@ -1,34 +1,43 @@
-//1295. Find Numbers with Even Number of Digits
-
+//8. String to Integer (atoi)
 #include <iostream>
-#include <vector>
 #include <string>
+#include <cassert>
 
-int findNumbers(std::vector<int>& nums) {
-	int count {0};
-	for (auto&i : nums) {
-		int digits {0};
-		int temp = i;
-		while (temp > 0) {
-			temp/= 10;
-			digits++;
-		}
 
-		if (digits % 2 == 0){
-			count++;
-		}
+int myAtoi (std::string s){
+	const char* str = s.c_str(); 
+	int result {0};
+	int sign {1};
+
+	if (!str) return -1;
+
+	while(*str ==' ') str++;
+
+	if(*str == '-'){
+		sign = -1;
+		str++;
+	} else if (*str == '+'){
+		sign = 1;
+		str++;
+	} else if (*str == '0'){
+		str++;
+	} 
+
+	while (*str >= '0' && *str <= '9'){
+		int dig = *str - '0';
+		if (result > (INT_MAX - dig) / 10) {
+            return sign == 1 ? INT_MAX : INT_MIN;
+        }
+		result = result * 10 + dig;
+		str++;
 	}
-	return count;
+	return result * sign;
 }
 
-
+	
 int main(){
-	std::vector<int> nums {12,345,2,6,7896};
-	// std::vector<int> nums {555,901,482,1771};
-
-	int res = findNumbers(nums);
-
-	std::cout << res << std::endl;
-
+	assert(42 == myAtoi("42"));
+	assert(-42 == myAtoi("-042"));
+	assert(1337 == myAtoi("1337c0d3"));
 	return 0;
 }
