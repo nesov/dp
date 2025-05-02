@@ -1,43 +1,30 @@
-//8. String to Integer (atoi)
+// 7. Reverse Integer
+
 #include <iostream>
 #include <string>
 #include <cassert>
 
-
-int myAtoi (std::string s){
-	const char* str = s.c_str(); 
-	int result {0};
-	int sign {1};
-
-	if (!str) return -1;
-
-	while(*str ==' ') str++;
-
-	if(*str == '-'){
+int reverse(int x) {
+	if (x == INT32_MIN) return 0;
+	int32_t sign{1};
+	if (x < 0){
 		sign = -1;
-		str++;
-	} else if (*str == '+'){
-		sign = 1;
-		str++;
-	} else if (*str == '0'){
-		str++;
-	} 
+		x *= -1;
+	}
 
-	while (*str >= '0' && *str <= '9'){
-		int dig = *str - '0';
-		if (result > (INT_MAX - dig) / 10) {
-            return sign == 1 ? INT_MAX : INT_MIN;
-        }
-		result = result * 10 + dig;
-		str++;
+	int32_t result{0};
+	while (x != 0){
+		if (result > (INT32_MAX - (x % 10)) / 10) return 0;
+		result = result * 10 + (x % 10);
+		x /= 10;
 	}
 	return result * sign;
 }
 
-	
 int main(){
-	assert(42 == myAtoi("42"));
-	assert(-42 == myAtoi("-042"));
-	assert(1337 == myAtoi("1337c0d3"));
+	assert(-21 == reverse(-120));
+	assert(321 == reverse(123));
+	assert(-123 == reverse(-321));
+	assert(0 == reverse(1534236469));
 	return 0;
 }
