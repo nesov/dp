@@ -1,27 +1,23 @@
-//58. Length of Last Word
+//69. Sqrt(x)
 
 #include <iostream>
-#include <string>
 
-int lengthOfLastWord(std::string s) {
-    std::string::reverse_iterator rev = s.rbegin();
-    int count {0};
-    while (rev != s.rend()){
-        if (*rev == ' ' && count == 0) {
-            rev++;
-        } else if (*rev == ' ' && count > 0){
+
+int mySqrt(int x) {
+    if (x == 0) return 0;
+    double epsilon = 1e-6;
+    double x1 = x / 2.0;
+    while (true) {
+        double next = 0.5 * (x1 + x / x1);
+        if (std::abs(next - x1) < epsilon)
             break;
-        } else {
-            count++;
-            rev++;
-        }
+        x1 = next;
     }
-    return count;
+    return x1;
 }
 
 
 int main() {
-    std::string s {"   fly me   to   the moon  "};
-    std::cout << lengthOfLastWord(s)<<std::endl;
+    std::cout <<  mySqrt(0) <<'\n';
     return 0;
 }
