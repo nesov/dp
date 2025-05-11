@@ -1,34 +1,27 @@
-//1550. Three Consecutive Odds
+//58. Length of Last Word
 
 #include <iostream>
+#include <string>
 
-bool threeConsecutiveOdds2(std::vector<int>& arr) {
-    std::vector<int>::iterator iter = arr.begin();
-    while ((iter+2) != arr.end()){
-        if ((*iter % 2 == 1) && (*(iter+1) % 2 == 1) && (*(iter+2) % 2 == 1)){
-            return true;
-        }
-        iter++;
-    }
-    return false;
-}
-
-
-bool threeConsecutiveOdds1(std::vector<int>& arr){
-    for (size_t i = 0; i + 2 < arr.size(); ++i) {
-        if (arr[i] % 2 == 1 && arr[i + 1] % 2 == 1 && arr[i + 2] % 2 == 1) {
-            return true;
+int lengthOfLastWord(std::string s) {
+    std::string::reverse_iterator rev = s.rbegin();
+    int count {0};
+    while (rev != s.rend()){
+        if (*rev == ' ' && count == 0) {
+            rev++;
+        } else if (*rev == ' ' && count > 0){
+            break;
+        } else {
+            count++;
+            rev++;
         }
     }
-    return false;
+    return count;
 }
 
 
 int main() {
-    std::vector<int> arr {2,6,4,1};
-    std::vector<int> arr1 {1,2,34,3,4,5,7,23,12};
-
-    bool result = threeConsecutiveOdds1(arr);
-    std::cout << std::boolalpha << result << std::endl;
-	return 0;
+    std::string s {"   fly me   to   the moon  "};
+    std::cout << lengthOfLastWord(s)<<std::endl;
+    return 0;
 }
