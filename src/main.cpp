@@ -1,73 +1,61 @@
-//2094. Finding 3-Digit Even Numbers
+//3335. Total Characters in String After Transformations I
 
 #include <iostream>
-#include <vector>
-#include <unordered_set>
-#include <algorithm>
 #include <assert.h>
 
-std::vector<int> findValidNumbers1(std::vector<int> digits) {
-    std::unordered_set<int> uniqueNumbers;
-    std::sort(digits.begin(), digits.end());
+static constexpr int mod = 1000000007;
 
-    do {
-        if (digits.size() < 3) break;
-        int d1 = digits[0], d2 = digits[1], d3 = digits[2];
-        if (d1 == 0) continue;    
-        if (d3 % 2 != 0) continue; 
-        int num = d1 * 100 + d2 * 10 + d3;
-        uniqueNumbers.insert(num);
-    } while (std::next_permutation(digits.begin(), digits.end()));
-    std::vector<int> result(uniqueNumbers.begin(), uniqueNumbers.end());
-    std::sort(result.begin(), result.end());
-    return result;
-}
+int lengthAfterTransformations1(std::string s, int t) {
+    int count{0};
+    int size = s.size();
+    std::string result{""};
+    std::string temp{""};
 
-
-std::vector<int> findEvenNumbers2(std::vector<int>& digits) {
-    std::unordered_set<int> nums;
-    int n = digits.size();
-    for (int i = 0; i < n; ++i) {
-        for (int j = 0; j < n; ++j) {
-            for (int k = 0; k < n; ++k) {
-                if (i == j || j == k || i == k) {
-                    continue;
-                }
-                int num = digits[i] * 100 + digits[j] * 10 + digits[k];
-                if (num >= 100 && num % 2 == 0) {
-                    nums.insert(num);
-                }
+    for (int i = t; i > 0; i--){
+        result.clear();
+        for (int j = 0; j < size; j++) {
+            if (s[j]++ == 'z'){
+                result += "ab";
+            } else {
+                result += s[j];
             }
         }
+        temp = result;
     }
-    std::vector<int> res;
-    for (const int num : nums) {
-        res.push_back(num);
-    }
-    std::sort(res.begin(), res.end());
-    return res;
+    count = result.size();
+    return count;
 }
 
 
-void run(){
-    std::vector<int> data {2,1,3,0};
-    std::vector<int> expected {102,120,130,132,210,230,302,310,312,320};
-    std::vector<int> actual = findEvenNumbers2(data);
-
-    assert(actual.size() == expected.size());
-    int size = expected.size();
-
-    for (int i = 0; i < size; i++){
-        assert(actual[i] == expected[i]);
+int lengthAfterTransformation2(std::string s, int t) {
+    std::vector<int> cnt(26);
+    for (char ch : s) {
+        ++cnt[ch - 'a'];
     }
-    std::cout <<"ok\n"; 
+    for (int round = 0; round < t; ++round) {
+        std::vector<int> nxt(26);
+        nxt[0] = cnt[25];
+        nxt[1] = (cnt[25] + cnt[0]) % mod;
+        for (int i = 2; i < 26; ++i) {
+            nxt[i] = cnt[i - 1];
+        }
+        cnt = std::move(nxt);
+    }
+
+    int ans {0};
+    for (int i = 0; i < 26; ++i) {
+        ans = (ans + cnt[i]) % mod;
+    }
+    return ans;
 }
 
-#define TEST
 
 int main() {
-#ifdef TEST
-    run();
-#endif
+    std::string s = "v"; 
+    int t = 7;  
+
+    int result = lengthAfterTransformation2(s,t);
+    std::cout <<"The result is : "<< result <<std::endl;
+    assert (result == 2);
     return 0;
 }
