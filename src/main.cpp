@@ -1,61 +1,38 @@
-//3335. Total Characters in String After Transformations I
+//1475. Final Prices With a Special Discount in a Shop
 
 #include <iostream>
 #include <assert.h>
+#include <vector>
+#include <stack>
+#include <algorithm>
 
-static constexpr int mod = 1000000007;
 
-int lengthAfterTransformations1(std::string s, int t) {
-    int count{0};
-    int size = s.size();
-    std::string result{""};
-    std::string temp{""};
-
-    for (int i = t; i > 0; i--){
-        result.clear();
-        for (int j = 0; j < size; j++) {
-            if (s[j]++ == 'z'){
-                result += "ab";
-            } else {
-                result += s[j];
-            }
+std::vector<int> finalPrices(std::vector<int>& prices) {
+    int size = prices.size();
+    std::stack<int> stk;
+    for (int i = 0; i < size; ++i) {
+        while (!stk.empty() && prices[i] <= prices[stk.top()]) {
+            int j = stk.top();
+            stk.pop();
+            prices[j] -= prices[i];
         }
-        temp = result;
+        stk.push(i);
     }
-    count = result.size();
-    return count;
-}
-
-
-int lengthAfterTransformation2(std::string s, int t) {
-    std::vector<int> cnt(26);
-    for (char ch : s) {
-        ++cnt[ch - 'a'];
-    }
-    for (int round = 0; round < t; ++round) {
-        std::vector<int> nxt(26);
-        nxt[0] = cnt[25];
-        nxt[1] = (cnt[25] + cnt[0]) % mod;
-        for (int i = 2; i < 26; ++i) {
-            nxt[i] = cnt[i - 1];
-        }
-        cnt = std::move(nxt);
-    }
-
-    int ans {0};
-    for (int i = 0; i < 26; ++i) {
-        ans = (ans + cnt[i]) % mod;
-    }
-    return ans;
+    return prices;
 }
 
 
 int main() {
-    std::string s = "v"; 
-    int t = 7;  
+    std::vector<int> data {8,4,6,2,3};
+    std::vector<int> expected {4,2,4,2,3};
 
-    int result = lengthAfterTransformation2(s,t);
-    std::cout <<"The result is : "<< result <<std::endl;
-    assert (result == 2);
+    std::vector<int> result = finalPrices(data);
+
+    for (int i = 0; i < data.size(); i++){
+        assert(data[i] == expected[i]);
+    }
+
+    std::for_each(result.begin(),result.end(),[](int i){ std::cout <<i <<", ";});
+
     return 0;
 }
