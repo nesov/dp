@@ -1,38 +1,20 @@
-//1475. Final Prices With a Special Discount in a Shop
-
 #include <iostream>
-#include <assert.h>
-#include <vector>
-#include <stack>
-#include <algorithm>
+#include <bitset>
+#include <iomanip>
 
 
-std::vector<int> finalPrices(std::vector<int>& prices) {
-    int size = prices.size();
-    std::stack<int> stk;
-    for (int i = 0; i < size; ++i) {
-        while (!stk.empty() && prices[i] <= prices[stk.top()]) {
-            int j = stk.top();
-            stk.pop();
-            prices[j] -= prices[i];
-        }
-        stk.push(i);
-    }
-    return prices;
+void print (uint32_t res) {
+    std::cout <<" : "<< std::bitset<32>(res) << std::endl;
 }
 
+int main(){
 
-int main() {
-    std::vector<int> data {8,4,6,2,3};
-    std::vector<int> expected {4,2,4,2,3};
+    uint32_t a = 0xAABBCCDD;
+    uint32_t expected = 0xAAEECCDD;
+    uint8_t b = 0xEE;
 
-    std::vector<int> result = finalPrices(data);
-
-    for (int i = 0; i < data.size(); i++){
-        assert(data[i] == expected[i]);
-    }
-
-    std::for_each(result.begin(),result.end(),[](int i){ std::cout <<i <<", ";});
-
+    a = (a & 0xFF00FFFF) | (b << 16);
+    print(expected);
+    print(a);
     return 0;
 }
