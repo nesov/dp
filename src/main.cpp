@@ -1,31 +1,20 @@
+// Find non double element in arr 
+
 #include <iostream>
-#include <memory>
+#include <vector>
+#include <assert.h>
 
-struct A {
- public:
-	int a_ = 10;
-	virtual ~A(){}; // base class destructor must be virtual (I forgot this while tech interview)
-    virtual void print(){
-        std::cout << "A print\n"; 
-    }
-};
-
-struct B : public A {
- public:
-	int b_ = 20;
-	~B(){}
-
-    void print() override {
-        std::cout << "B print\n"; 
-    }
-};
-
-void fn(A& a) { // replaced A a with A& a to let it working correctly
-    a.print(); 
+int findUnique(const std::vector<int>& nums) {
+    int result = 0;
+    for (int num : nums) result ^= num;
+    return result;
 }
 
 int main (){
-    std::unique_ptr<A> a = std::make_unique<B>();
-    fn(*a);
+    std::vector<int> data = {5, 3, 2, 3, 5, -1, 2, 9, 9};
+    int actual = findUnique(data) ;
+    assert (actual == -1);
+
+    std::cout << actual;
 	return 0; 
 }
