@@ -1,20 +1,28 @@
-// Find non double element in arr 
+
+/*
+    2264. Largest 3-Same-Digit Number in String
+*/
 
 #include <iostream>
-#include <vector>
-#include <assert.h>
+#include <string>
 
-int findUnique(const std::vector<int>& nums) {
-    int result = 0;
-    for (int num : nums) result ^= num;
+
+
+std::string largestGoodInteger(std::string num) {
+    std::string result {""}, cand{""};
+    if (num.length() < 3) return result;
+    for(int i = 0; i < num.length() - 2; i++){
+        if (num[i] == num[i+1] && num[i+1] == num[i+2]){
+            cand = num.substr(i, 3);
+            if (cand > result) {
+                result = cand;
+            }
+        }
+    }
     return result;
 }
 
 int main (){
-    std::vector<int> data = {5, 3, 2, 3, 5, -1, 2, 9, 9};
-    int actual = findUnique(data) ;
-    assert (actual == -1);
-
-    std::cout << actual;
-	return 0; 
+    std::cout<< largestGoodInteger("3200014888")<<std::endl;
+    return 0;
 }
