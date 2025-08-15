@@ -1,17 +1,15 @@
 
 /*
-    326. Power of Three
+    342. Power of Four
 */
 
 #include <iostream>
 
-constexpr int32_t maxp {1162261467};
-
-constexpr bool isPowerOfThree(int32_t n) {
-    return n > 0 && maxp % n == 0;    
+constexpr bool isPowerOfFour(int32_t n) {
+    return n > 0 && (n & (n - 1)) == 0 && (n & 0x55555555) != 0;  
 }
 
 int main (){
-    std::cout<< isPowerOfThree(28)<<std::endl;
+    std::cout<< isPowerOfFour(16)<<std::endl;
     return 0;
 }
