@@ -1,28 +1,17 @@
 
 /*
-    2264. Largest 3-Same-Digit Number in String
+    326. Power of Three
 */
 
 #include <iostream>
-#include <string>
 
+constexpr int32_t maxp {1162261467};
 
-
-std::string largestGoodInteger(std::string num) {
-    std::string result {""}, cand{""};
-    if (num.length() < 3) return result;
-    for(int i = 0; i < num.length() - 2; i++){
-        if (num[i] == num[i+1] && num[i+1] == num[i+2]){
-            cand = num.substr(i, 3);
-            if (cand > result) {
-                result = cand;
-            }
-        }
-    }
-    return result;
+constexpr bool isPowerOfThree(int32_t n) {
+    return n > 0 && maxp % n == 0;    
 }
 
 int main (){
-    std::cout<< largestGoodInteger("3200014888")<<std::endl;
+    std::cout<< isPowerOfThree(28)<<std::endl;
     return 0;
 }
