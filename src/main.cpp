@@ -1,15 +1,23 @@
 
 /*
-    342. Power of Four
+    1323. Maximum 69 Number
 */
 
 #include <iostream>
 
-constexpr bool isPowerOfFour(int32_t n) {
-    return n > 0 && (n & (n - 1)) == 0 && (n & 0x55555555) != 0;  
+int maximum69Number (int num) {  
+   std::string str = std::to_string(num);
+    for (char &c : str) {
+        if (c == '6') {
+            c = '9';
+            break;
+        }
+    }
+    return std::stoi(str);
 }
 
+
 int main (){
-    std::cout<< isPowerOfFour(16)<<std::endl;
+    std::cout << maximum69Number(9669)<<std::endl;
     return 0;
 }
