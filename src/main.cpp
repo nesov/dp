@@ -1,23 +1,33 @@
 
 /*
-    1323. Maximum 69 Number
+    3. Longest Substring Without Repeating Characters
 */
 
 #include <iostream>
+#include <string>
+#include <unordered_set>
 
-int maximum69Number (int num) {  
-   std::string str = std::to_string(num);
-    for (char &c : str) {
-        if (c == '6') {
-            c = '9';
-            break;
+int lengthOfLongestSubstring(const std::string& str) {
+    std::unordered_set<char> seen;
+    int left = 0, right = 0, maxLen = 0;
+    int strSize = static_cast<int>(str.size());
+
+    while (right < strSize) {
+        char c = str[right];
+        if (!seen.count(c)) {
+            seen.insert(c);
+            maxLen = std::max(maxLen, right - left + 1);
+            right++;
+        } else {
+            seen.erase(str[left]);
+            left++;
         }
     }
-    return std::stoi(str);
+    return maxLen;
 }
 
 
 int main (){
-    std::cout << maximum69Number(9669)<<std::endl;
+    std::cout << lengthOfLongestSubstring("au") << std::endl;
     return 0;
 }
