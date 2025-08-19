@@ -1,33 +1,27 @@
 
 /*
-    3. Longest Substring Without Repeating Characters
+    392. Is Subsequence
 */
 
 #include <iostream>
-#include <string>
-#include <unordered_set>
 
-int lengthOfLongestSubstring(const std::string& str) {
-    std::unordered_set<char> seen;
-    int left = 0, right = 0, maxLen = 0;
-    int strSize = static_cast<int>(str.size());
 
-    while (right < strSize) {
-        char c = str[right];
-        if (!seen.count(c)) {
-            seen.insert(c);
-            maxLen = std::max(maxLen, right - left + 1);
-            right++;
-        } else {
-            seen.erase(str[left]);
-            left++;
+bool isSubsequence(const std::string& s, const std::string& t) {
+    int i = 0, j = 0;
+    int ssize = s.size();
+    int tsize = t.size();
+
+    while (i < ssize && j < tsize) {
+        if (s[i] == t[j]) {
+            i++;
         }
+        j++;
     }
-    return maxLen;
+    return i == ssize;
 }
 
 
 int main (){
-    std::cout << lengthOfLongestSubstring("au") << std::endl;
+    std::cout << isSubsequence("abc", "ahbgdc") << std::endl;
     return 0;
 }
