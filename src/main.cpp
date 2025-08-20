@@ -1,27 +1,22 @@
 
 /*
-    392. Is Subsequence
+    231. Power of Two
 */
 
 #include <iostream>
 
 
-bool isSubsequence(const std::string& s, const std::string& t) {
-    int i = 0, j = 0;
-    int ssize = s.size();
-    int tsize = t.size();
-
-    while (i < ssize && j < tsize) {
-        if (s[i] == t[j]) {
-            i++;
-        }
-        j++;
+bool isPowerOfTwo(int n) {
+    if (n <= 0) return false;
+    while (n > 1){
+        if (n % 2 != 0) return false;
+        else n >>=1;
     }
-    return i == ssize;
+    return true;
 }
 
 
 int main (){
-    std::cout << isSubsequence("abc", "ahbgdc") << std::endl;
+    std::cout << isPowerOfTwo(16) << std::endl;
     return 0;
 }
